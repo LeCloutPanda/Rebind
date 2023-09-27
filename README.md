@@ -1,5 +1,5 @@
 # Rebind
-[ResoniteModLoader(Not avaliable just yet)]() mod for [Resonite](https://resonite.com/) that lets you change the resolution of your finger photos.
+[ResoniteModLoader(Not avaliable just yet)]() mod for [Resonite](https://resonite.com/) that unbinds secondary from joystick click and binds it to the bottom face buttons and moves the open dash button to holding the top face buttons on oculos controllers.
 
 # Installation
 1. Install [ResoniteModLoader(Not avaliable just yet)]().
