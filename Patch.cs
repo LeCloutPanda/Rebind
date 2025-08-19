@@ -2,6 +2,7 @@
 using FrooxEngine;
 using HarmonyLib;
 using ResoniteModLoader;
+using Renderite.Shared;
 
 namespace Rebind
 {
