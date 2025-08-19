@@ -1,24 +1,55 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<RootNamespace>Rebind</RootNamespace>
+		<AssemblyName>Rebind</AssemblyName>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<TargetFramework>net9.0</TargetFramework>
+		<FileAlignment>512</FileAlignment>
+		<LangVersion>10.0</LangVersion>
+		<Nullable>disable</Nullable>
+		<Deterministic>true</Deterministic>
+		<!-- Change CopyToMods to true if you'd like builds to be moved into the Mods folder automatically-->
+		<CopyToMods Condition="'$(CopyToMods)'==''">true</CopyToMods>
+		<DebugType Condition="'$(Configuration)'=='Debug'">embedded</DebugType>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(GamePath)'==''">
+		<!-- If you don't want to provide a GamePath in dotnet build, you can specify one here -->
+		<GamePath>$(MSBuildThisFileDirectory)Resonite/</GamePath>
+		<GamePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</GamePath>
+		<GamePath Condition="Exists('$(HOME)\.steam\steam\steamapps\common\Resonite\')">$(HOME)/.steam/steam/steamapps/common/Resonite/</GamePath>
+    <GamePath Condition="Exists('E:\Games\Steam\steamapps\common\Resonite\')">E:\Games\Steam\steamapps\common\Resonite\</GamePath>
+    <GamePath Condition="Exists('E:\Programs\Steam\steamapps\common\Resonite\')">E:\Programs\Steam\steamapps\common\Resonite\</GamePath>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Libraries\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Elements.Core">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Resonite_Data\Managed\Elements.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FrooxEngine">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Resonite_Data\Managed\FrooxEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="ResoniteModLoader">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Resonite\Libraries\ResoniteModLoader.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="ResoniteModLoader">
+		    <HintPath>$(GamePath)Libraries\ResoniteModLoader.dll</HintPath>
+		    <Private>False</Private>
+		</Reference>
+		<Reference Include="HarmonyLib">
+		  <HintPath>$(GamePath)rml_libs\0Harmony.dll</HintPath>
+			<HintPath Condition="Exists('$(GamePath)rml_libs\0Harmony.dll')">$(GamePath)rml_libs\0Harmony.dll</HintPath>
+			<HintPath Condition="Exists('$(GamePath)MonkeyLoader\0Harmony.dll')">$(GamePath)MonkeyLoader\0Harmony.dll</HintPath>
+		  <HintPath Condition="Exists('$(GamePath)0Harmony.dll')">$(GamePath)0Harmony.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="FrooxEngine">
+		    <HintPath>$(GamePath)FrooxEngine.dll</HintPath>
+		    <Private>False</Private>
+		</Reference>
+		<Reference Include="Elements.Core">
+			<HintPath>$(GamePath)Elements.Core.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="Renderite.Shared">
+			<HintPath>$(GamePath)Renderite.Shared.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
+		<Message Text="Attempting to copy $(TargetFileName) to $(GamePath)rml_mods" Importance="high" />
+		<Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFolder="$(GamePath)rml_mods" ContinueOnError="true" />
+	</Target>
 </Project>
