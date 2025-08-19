@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<RootNamespace>ResoniteSlotInspectorCounter</RootNamespace>
-		<AssemblyName>ResoniteSlotInspectorCounter</AssemblyName>
+		<RootNamespace>Rebind</RootNamespace>
+		<AssemblyName>Rebind</AssemblyName>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<TargetFramework>net9.0</TargetFramework>
 		<FileAlignment>512</FileAlignment>
