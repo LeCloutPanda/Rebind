@@ -10,7 +10,7 @@ namespace Rebind
     {
         public override string Author => "LeCloutPanda";
         public override string Name => "Rebind";
-        public override string Version => "1.0.0";
+        public override string Version => "1.0.1";
 
         public override void OnEngineInit()
         {
