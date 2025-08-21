@@ -18,7 +18,7 @@ public abstract class BaseResonitePlugin : BasePlugin
 public class Patch : BaseResonitePlugin
 {
     public const string GUID = "dev.lecloutpanda.rebind";
-    public const string Name = "Rebimd";
+    public const string Name = "Rebind";
     public const string Version = "1.0.1";
     public override string Author => "LeCloutPanda";
     public override string Link => "https://github.com/LeCloutPanda/Rebind";
