@@ -2,17 +2,12 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using BepInEx.NET.Common;
+using BepInExResoniteShim;
 using Elements.Core;
 using FrooxEngine;
 using HarmonyLib;
 
 namespace Rebind;
-
-public abstract class BaseResonitePlugin : BasePlugin
-{
-    public abstract string Author { get; }
-    public abstract string Link { get; }
-}
 
 [BepInPlugin(GUID, Name, Version)]
 public class Patch : BaseResonitePlugin

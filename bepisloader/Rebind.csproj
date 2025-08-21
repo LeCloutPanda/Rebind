@@ -28,6 +28,9 @@
 		<Reference Include="BepInEx.Preloader.Core">
 			<HintPath>$(GamePath)BepInEx\core\BepInEx.Preloader.Core.dll</HintPath>
 		</Reference>
+		<Reference Include="BepInExResoniteShim">
+			<HintPath>$(GamePath)BepInEx\plugins\BepInExResoniteShim.dll</HintPath>
+		</Reference>
 		<Reference Include="FrooxEngine">
 		    <HintPath>$(GamePath)FrooxEngine.dll</HintPath>
 		</Reference>
