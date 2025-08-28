@@ -22,13 +22,13 @@ outdir = "./build"
 
 # Copy the compiled DLL to the plugins folder in the mod package
 [[build.copy]]
-source = "./bin/Release/DefaultLaserState.dll"
-target = "plugins/DefaultLaserState/"
+source = "./bin/Release/Rebind.dll"
+target = "plugins/Rebind/"
 
 # Include the PDB file for better debugging support
 [[build.copy]]
-source = "./bin/Release/DefaultLaserState.pdb"
-target = "plugins/DefaultLaserState/"
+source = "./bin/Release/Rebind.pdb"
+target = "plugins/Rebind/"
 
 # Uncomment the following lines to include CHANGELOG file in your mod package. https://wiki.thunderstore.io/mods/updating-a-package#changelog
 # [[build.copy]]
