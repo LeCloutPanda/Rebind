@@ -8,8 +8,8 @@ using HarmonyLib;
 
 namespace Rebind;
 
-[BepInDependency("ResoniteModding.BepInExResoniteShim")]
-[ResonitePlugin("dev.lecloutpanda.rebind", "Rebind", "1.0.2", "LeCloutPanda", "https://github.com/LeCloutPanda/Rebind")]
+[ResonitePlugin(PluginMetadata.GUID, PluginMetadata.NAME, PluginMetadata.VERSION, PluginMetadata.AUTHORS, PluginMetadata.REPOSITORY_URL)]
+[BepInDependency(BepInExResoniteShim.PluginMetadata.GUID, BepInDependency.DependencyFlags.HardDependency)]
 public class Patch : BasePlugin 
 {
     public override void Load()

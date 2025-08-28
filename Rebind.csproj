@@ -1,49 +1,58 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<RootNamespace>Rebind</RootNamespace>
-		<AssemblyName>Rebind</AssemblyName>
-		<Version>1.0.2</Version>
-		
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+  <PropertyGroup>
+    <Version>1.0.3</Version>
+    <Authors>LeCloutPanda</Authors>
+    <TargetFramework>net9.0</TargetFramework>
+    <RepositoryUrl>https://github.com/LeCloutPanda/Rebind</RepositoryUrl>
+    <PackageId>dev.lecloutpanda.rebind</PackageId>
+    <Product>Rebind</Product>
+    <RootNamespace>Rebind</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Deterministic>true</Deterministic>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyToPlugins>true</CopyToPlugins>
+    <GamePath Condition="'$(ResonitePath)' != ''">$(ResonitePath)/</GamePath>
+    <GamePath Condition="Exists('$(MSBuildProgramFiles32)\Steam\steamapps\common\Resonite\')">$(MSBuildProgramFiles32)\Steam\steamapps\common\Resonite\</GamePath>
+    <GamePath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/Resonite/')">$(HOME)/.steam/steam/steamapps/common/Resonite/</GamePath>
+    <PluginTargetDir>$(GamePath)BepInEx\plugins\$(AssemblyName)</PluginTargetDir>
+    <RestoreAdditionalProjectSources>
+      https://nuget-modding.resonite.net/v3/index.json;
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
 
-		<GamePath>$(MSBuildThisFileDirectory)Resonite</GamePath>
-		<GamePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</GamePath>
-		<GamePath Condition="Exists('$(HOME)\.steam\steam\steamapps\common\Resonite\')">$(HOME)/.steam/steam/steamapps/common/Resonite/</GamePath>
-		<GamePath Condition="Exists('E:\Programs\Steam\steamapps\common\Resonite\')">E:\Programs\Steam\steamapps\common\Resonite\</GamePath>
-		<GamePath Condition="Exists('E:\Games\Steam\steamapps\common\Resonite\')">E:\Games\Steam\steamapps\common\Resonite\</GamePath>
-	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="BepInEx.NET.CoreCLR" Version="6.0.0-be.*" IncludeAssets="compile" />
+    <PackageReference Include="BepInEx.ResonitePluginInfoProps" Version="3.*" />
+    <PackageReference Include="ResoniteModding.BepInExResoniteShim" Version="0.8.*" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Reference Include="0Harmony">
-			<HintPath>$(GamePath)BepInEx\core\0Harmony.dll</HintPath>
-		</Reference>
-		<Reference Include="BepInEx.Core">
-			<HintPath>$(GamePath)BepInEx\core\BepInEx.Core.dll</HintPath>
-		</Reference>
-		<Reference Include="BepInEx.NET.Common">
-			<HintPath>$(GamePath)BepInEx\core\BepInEx.NET.Common.dll</HintPath>
-		</Reference>
-		<Reference Include="BepInEx.Preloader.Core">
-			<HintPath>$(GamePath)BepInEx\core\BepInEx.Preloader.Core.dll</HintPath>
-		</Reference>
-		<Reference Include="BepInExResoniteShim">
-			<HintPath>$(GamePath)BepInEx\plugins\BepInExResoniteShim.dll</HintPath>
-		</Reference>
-		<Reference Include="FrooxEngine">
-		    <HintPath>$(GamePath)FrooxEngine.dll</HintPath>
-		</Reference>
-		<Reference Include="Elements.Core">
-			<HintPath>$(GamePath)Elements.Core.dll</HintPath>
-		</Reference>
-		<Reference Include="Renderite.Shared">
-			<HintPath>$(GamePath)Renderite.Shared.dll</HintPath>
-		</Reference>
-	</ItemGroup>
+  <ItemGroup Condition="!Exists('$(GamePath)')">
+    <PackageReference Include="Resonite.GameLibs" Version="2025.*" />
+  </ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(GamePath)BepInEx\plugins" />
-		<Message Text="Copied $(TargetFileName) to $(GamePath)BepInEx\plugins" Importance="high" />
-	</Target>
+  <ItemGroup Condition="Exists('$(GamePath)')">
+    <Reference Include="FrooxEngine">
+      <HintPath>$(GamePath)FrooxEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Elements.Core">
+      <HintPath>$(GamePath)Elements.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Renderite.Shared">
+      <HintPath>$(GamePath)Renderite.Shared.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <ItemGroup>
+      <PluginFiles Include="$(TargetPath)" />
+      <PluginFiles Include="$(TargetDir)$(TargetName).pdb" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(PluginTargetDir)" Condition="'$(CopyToPlugins)' == 'true'" />
+    <Message Text="Copied plugin files to $(PluginTargetDir)" Importance="high" Condition="'$(CopyToPlugins)' == 'true'" />
+  </Target>
 </Project>
