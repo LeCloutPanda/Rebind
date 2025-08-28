@@ -43,4 +43,4 @@ target = "plugins/Rebind/"
 [publish]
 repository = "https://thunderstore.io"
 communities = ["resonite"]
-categories = [ "technicaltweaks" ] # TODO: Change this to your mod's categories, see https://thunderstore.io/api/experimental/community/resonite/category/ for a list of available categories
+categories = [ "technicaltweaks", "controls" ] # TODO: Change this to your mod's categories, see https://thunderstore.io/api/experimental/community/resonite/category/ for a list of available categories
