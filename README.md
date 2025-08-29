@@ -1,5 +1,5 @@
 # Rebind
-A [Resonite](https://resonite.com/) mod that unbinds secondary from joystick click and binds it to the bottom face buttons and moves the open dash button to holding the top face buttons on oculos controllers.
+A [Resonite](https://resonite.com/) mod that unbinds secondary from joystick click and binds it to the bottom face buttons and moves the open dash button to holding the top face buttons on oculus controllers.
 
 ## Installation (Manual)
 1. Install [BepisLoader](https://github.com/ResoniteModding/BepisLoader) for Resonite.
